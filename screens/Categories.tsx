@@ -9,6 +9,7 @@ import {
   Modal,
   FlatList,
   Animated,
+  ScrollView,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import ColorPicker, {
@@ -108,31 +109,33 @@ export default function Categories() {
         style={{
           margin: theme.spacing.lg,
           flex: 1,
+          justifyContent: "space-between",
         }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={100}
       >
-        <View
-          style={{
-            borderRadius: theme.borderRadius.md,
-            overflow: "hidden",
-          }}
-        >
-          <FlatList
-            data={categories}
-            renderItem={({ item }) => (
-              <Swipeable
-                containerStyle={{ backgroundColor: theme.colors.error }}
-                renderRightActions={(e) => renderRightActions(e, item.id)}
-              >
-                <CategoryRow color={item.color} name={item.name} />
-              </Swipeable>
-            )}
-            keyExtractor={(item) => item.name}
-          />
-        </View>
-        {/* Spacer */}
-        <View style={{ flex: 1 }} />
+        <ScrollView>
+          <View
+            style={{
+              borderRadius: theme.borderRadius.md,
+              overflow: "hidden",
+            }}
+          >
+            <FlatList
+              data={categories}
+              renderItem={({ item }) => (
+                <Swipeable
+                  containerStyle={{ backgroundColor: theme.colors.error }}
+                  renderRightActions={(e) => renderRightActions(e, item.id)}
+                >
+                  <CategoryRow color={item.color} name={item.name} />
+                </Swipeable>
+              )}
+              keyExtractor={(item) => item.name}
+            />
+          </View>
+        </ScrollView>
+
         {/* ToolBar */}
         <View
           style={{

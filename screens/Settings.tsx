@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React from "react";
 
 import { ListItem } from "../components/ListItem";
@@ -23,9 +23,21 @@ export const Settings = ({ navigation }) => {
       />
       <ListItem
         label="Erase all data"
-        detail={<IconChevronRight color={theme.colors.border} size={20} />}
         isDestructive
-        onClick={() => {}}
+        onClick={() => {
+          Alert.alert(
+            "Are you sure man?",
+            "Don't ignore how much money you wasted on buying useless stuffs",
+            [
+              { text: "Cancel", style: "cancel" },
+              {
+                text: "Confirm erase",
+                style: "destructive",
+                onPress: () => {},
+              },
+            ]
+          );
+        }}
       />
     </View>
   );
