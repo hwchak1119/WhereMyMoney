@@ -36,14 +36,15 @@ export const ListItem = ({
           backgroundColor: theme.colors.card,
         }}
         onPress={onClick}
+        disabled={!onClick}
       >
         <Text style={{ color: isDestructive ? theme.colors.error : "white" }}>
           {label}
         </Text>
-        {detail && <Text>{detail}</Text>}
+        {detail && <>{detail}</>}
       </TouchableOpacity>
     ),
-    []
+    [label, detail]
   );
 
   if (swipeToDelete) {
@@ -82,11 +83,12 @@ export const ListItem = ({
         backgroundColor: theme.colors.card,
       }}
       onPress={onClick}
+      disabled={!onClick}
     >
       <Text style={{ color: isDestructive ? theme.colors.error : "white" }}>
         {label}
       </Text>
-      {detail && <Text>{detail}</Text>}
+      {detail && <>{detail}</>}
     </TouchableOpacity>
   );
 };
