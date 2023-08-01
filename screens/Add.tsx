@@ -5,6 +5,7 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState, useRef, useMemo } from "react";
 import BottomSheet, {
@@ -141,6 +142,25 @@ export const Add = () => {
             }
           />
         </View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: theme.colors.primary,
+            borderRadius: theme.borderRadius.md,
+            padding: theme.spacing.md,
+            marginHorizontal: theme.spacing.lg,
+          }}
+          onPress={() => {}}
+        >
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontWeight: "500",
+              textAlign: "center",
+            }}
+          >
+            SUBMIT
+          </Text>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
       <BottomSheet
         ref={sheetRef}
@@ -183,6 +203,7 @@ export const Add = () => {
               testID="dateTimePicker"
               value={date}
               mode={"date"}
+              maximumDate={new Date()}
               onChange={(e, selectedDate) => {
                 setDate(selectedDate);
               }}
