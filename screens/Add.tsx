@@ -3,12 +3,16 @@ import {
   Text,
   KeyboardAvoidingView,
   TextInput,
-  FlatList,
   Button,
   TouchableHighlight,
 } from "react-native";
 import React, { useState, useRef, useMemo } from "react";
-import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetView,
+  BottomSheetFlatList,
+} from "@gorhom/bottom-sheet";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
 
 import { DismissKeyboardView } from "../components/DismissKeyboardView";
 import { ListItem } from "../components/ListItem";
@@ -20,14 +24,19 @@ import { CategoryProps } from "../types/category";
 export const Add = () => {
   const [recurrence, setRecurrence] = useState<Recurrence>(Recurrence.None);
   const [amount, setAmount] = useState(null);
+  const [date, setDate] = useState(new Date());
   const [note, setNote] = useState("");
-  const [category, setCategory] = useState("None");
+  const [category, setCategory] = useState({
+    id: "1",
+    color: theme.colors.primary,
+    name: "None",
+  });
   const [sheetContent, setSheetContent] = useState<
     "recurrence" | "date" | "category"
   >("recurrence");
 
   const sheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ["25%", "70"], []);
+  const snapPoints = useMemo(() => ["50%", "85"], []);
   const data = useMemo(() => Object.keys(Recurrence), [Recurrence]);
 
   const categories: CategoryProps[] = [
@@ -86,7 +95,7 @@ export const Add = () => {
             detail={
               <View style={{ marginVertical: -theme.spacing.md }}>
                 <Button
-                  title={recurrence}
+                  title={moment(date).format("YYYY-MM-DD h:mm a").toString()}
                   color={theme.colors.primary}
                   onPress={() => {
                     setSheetContent("date");
@@ -121,8 +130,8 @@ export const Add = () => {
             detail={
               <View style={{ marginVertical: -theme.spacing.md }}>
                 <Button
-                  title={category}
-                  color={theme.colors.primary}
+                  title={category.name}
+                  color={category.color}
                   onPress={() => {
                     setSheetContent("category");
                     sheetRef.current?.snapToIndex(0);
@@ -162,6 +171,24 @@ export const Add = () => {
             }}
           />
         )}
+        {sheetContent === "date" && (
+          <BottomSheetView
+            style={{
+              backgroundColor: theme.colors.card,
+              height: "100%",
+            }}
+          >
+            <DateTimePicker
+              display="inline"
+              testID="dateTimePicker"
+              value={date}
+              mode={"date"}
+              onChange={(e, selectedDate) => {
+                setDate(selectedDate);
+              }}
+            />
+          </BottomSheetView>
+        )}
         {sheetContent === "category" && (
           <BottomSheetFlatList
             data={categories}
@@ -170,7 +197,7 @@ export const Add = () => {
               <TouchableHighlight
                 style={{ padding: theme.spacing.md }}
                 onPress={() => {
-                  setCategory(item.name);
+                  setCategory(item);
                   sheetRef.current?.close();
                 }}
               >
