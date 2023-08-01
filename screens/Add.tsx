@@ -10,6 +10,7 @@ import {
 import React, { useState, useRef, useMemo } from "react";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
+import { DismissKeyboardView } from "../components/DismissKeyboardView";
 import { ListItem } from "../components/ListItem";
 import { theme } from "../theme";
 import { Recurrence } from "../types/constant";
@@ -23,7 +24,7 @@ export const Add = () => {
   const data = useMemo(() => Object.keys(Recurrence), [Recurrence]);
 
   return (
-    <>
+    <DismissKeyboardView>
       <KeyboardAvoidingView>
         <View
           style={{
@@ -38,7 +39,7 @@ export const Add = () => {
               <TextInput
                 placeholder="Amount"
                 textAlign="right"
-                // keyboardType="numeric"
+                keyboardType="numeric"
                 onChangeText={(e) => setAmount(e)}
                 style={{
                   color: "white",
@@ -95,6 +96,6 @@ export const Add = () => {
           }}
         />
       </BottomSheet>
-    </>
+    </DismissKeyboardView>
   );
 };
