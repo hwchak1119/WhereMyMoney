@@ -15,13 +15,26 @@ import { ListItem } from "../components/ListItem";
 import { theme } from "../theme";
 import { Recurrence } from "../types/constant";
 
+import { CategoryProps } from "../types/category";
+
 export const Add = () => {
   const [recurrence, setRecurrence] = useState<Recurrence>(Recurrence.None);
   const [amount, setAmount] = useState(null);
+  const [note, setNote] = useState("");
+  const [category, setCategory] = useState("None");
+  const [sheetContent, setSheetContent] = useState<
+    "recurrence" | "date" | "category"
+  >("recurrence");
 
   const sheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["25%", "70"], []);
   const data = useMemo(() => Object.keys(Recurrence), [Recurrence]);
+
+  const categories: CategoryProps[] = [
+    { id: "1", color: "#FFFFFF", name: "first" },
+    { id: "2", color: "#FFFFFF", name: "second" },
+    { id: "3", color: "#FFFFFF", name: "third" },
+  ];
 
   return (
     <DismissKeyboardView>
@@ -60,6 +73,58 @@ export const Add = () => {
                   title={recurrence}
                   color={theme.colors.primary}
                   onPress={() => {
+                    setSheetContent("recurrence");
+                    sheetRef.current?.snapToIndex(0);
+                  }}
+                />
+              </View>
+            }
+          />
+
+          <ListItem
+            label="Date"
+            detail={
+              <View style={{ marginVertical: -theme.spacing.md }}>
+                <Button
+                  title={recurrence}
+                  color={theme.colors.primary}
+                  onPress={() => {
+                    setSheetContent("date");
+                    sheetRef.current?.snapToIndex(0);
+                  }}
+                />
+              </View>
+            }
+          />
+
+          <ListItem
+            label="Note"
+            detail={
+              <TextInput
+                placeholder="Note"
+                textAlign="right"
+                keyboardType="numeric"
+                // onChangeText={(e) => setAmount(e)}
+                style={{
+                  color: "white",
+                  flex: 1,
+                  marginLeft: theme.spacing.sm,
+                  padding: 10,
+                  marginVertical: -theme.spacing.md,
+                }}
+              />
+            }
+          />
+
+          <ListItem
+            label="Category"
+            detail={
+              <View style={{ marginVertical: -theme.spacing.md }}>
+                <Button
+                  title={category}
+                  color={theme.colors.primary}
+                  onPress={() => {
+                    setSheetContent("category");
                     sheetRef.current?.snapToIndex(0);
                   }}
                 />
@@ -77,24 +142,62 @@ export const Add = () => {
         handleIndicatorStyle={{ backgroundColor: theme.colors.text }}
         // onChange={handleSheetChange}
       >
-        <BottomSheetFlatList
-          data={data}
-          keyExtractor={(i) => i}
-          renderItem={({ item }) => (
-            <TouchableHighlight
-              style={{ padding: theme.spacing.md }}
-              onPress={() => {
-                setRecurrence(item as Recurrence);
-                sheetRef.current?.close();
-              }}
-            >
-              <Text style={{ color: theme.colors.text }}>{item}</Text>
-            </TouchableHighlight>
-          )}
-          style={{
-            backgroundColor: theme.colors.card,
-          }}
-        />
+        {sheetContent === "recurrence" && (
+          <BottomSheetFlatList
+            data={data}
+            keyExtractor={(i) => i}
+            renderItem={({ item }) => (
+              <TouchableHighlight
+                style={{ padding: theme.spacing.md }}
+                onPress={() => {
+                  setRecurrence(item as Recurrence);
+                  sheetRef.current?.close();
+                }}
+              >
+                <Text style={{ color: theme.colors.text }}>{item}</Text>
+              </TouchableHighlight>
+            )}
+            style={{
+              backgroundColor: theme.colors.card,
+            }}
+          />
+        )}
+        {sheetContent === "category" && (
+          <BottomSheetFlatList
+            data={categories}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <TouchableHighlight
+                style={{ padding: theme.spacing.md }}
+                onPress={() => {
+                  setCategory(item.name);
+                  sheetRef.current?.close();
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: theme.spacing.md,
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: item.color,
+                      height: 12,
+                      width: 12,
+                      borderRadius: theme.borderRadius.md,
+                    }}
+                  />
+                  <Text style={{ color: theme.colors.text }}>{item.name}</Text>
+                </View>
+              </TouchableHighlight>
+            )}
+            style={{
+              backgroundColor: theme.colors.card,
+            }}
+          />
+        )}
       </BottomSheet>
     </DismissKeyboardView>
   );
