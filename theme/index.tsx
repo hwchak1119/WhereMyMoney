@@ -8,6 +8,7 @@ export const theme = {
     background: colors.zinc[900],
     card: colors.zinc[800],
     text: colors.zinc[50],
+    info: colors.zinc[500],
     border: colors.zinc[700],
     notification: colors.teal[500],
   },
