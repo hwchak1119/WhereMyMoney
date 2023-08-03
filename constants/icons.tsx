@@ -4,7 +4,6 @@ import {
   Ionicons,
   Feather,
 } from "@expo/vector-icons";
-import type { StyleProp } from "react-native";
 
 type IconProps = {
   color?: string;
@@ -33,4 +32,7 @@ export const IconChevronRight = ({ size, color }: IconProps) => {
 };
 export const IconTrash = ({ size, color }: IconProps) => {
   return <Feather name="trash-2" color={color} size={size} />;
+};
+export const IconCalendar = ({ size, color }: IconProps) => {
+  return <Entypo name="calendar" color={color} size={size} />;
 };

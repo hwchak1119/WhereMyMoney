@@ -1,10 +1,11 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { theme } from "../theme";
 import { Expenses, Reports, Add, Settings } from "../screens";
 import TabBarIcon from "../components/TabBarIcon";
+import { IconCalendar } from "../constants/icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,9 +26,14 @@ export default function TabScreen() {
         component={Expenses}
       />
       <Tab.Screen
-        options={{
+        options={({ navigation }) => ({
           tabBarIcon: (props) => <TabBarIcon type="reports" {...props} />,
-        }}
+          headerRight: () => (
+            <TouchableOpacity style={{ marginRight: theme.spacing.md }}>
+              <IconCalendar size={20} color={theme.colors.primary} />
+            </TouchableOpacity>
+          ),
+        })}
         name="Reports"
         component={Reports}
       />

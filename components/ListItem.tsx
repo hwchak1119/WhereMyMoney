@@ -7,7 +7,7 @@ import { theme } from "../theme";
 type Props = {
   label: string;
   detail?: React.ReactNode;
-  onClick?: () => void;
+  onPress?: () => void;
   swipeToDelete?: boolean;
   onDelete?: () => void;
   isDestructive?: boolean;
@@ -16,7 +16,7 @@ type Props = {
 export const ListItem = ({
   label,
   detail,
-  onClick,
+  onPress,
   swipeToDelete,
   onDelete,
   isDestructive,
@@ -35,8 +35,8 @@ export const ListItem = ({
           borderBottomColor: theme.colors.border,
           backgroundColor: theme.colors.card,
         }}
-        onPress={onClick}
-        disabled={!onClick}
+        onPress={onPress}
+        disabled={!onPress}
       >
         <Text style={{ color: isDestructive ? theme.colors.error : "white" }}>
           {label}
@@ -82,8 +82,8 @@ export const ListItem = ({
         borderBottomColor: theme.colors.border,
         backgroundColor: theme.colors.card,
       }}
-      onPress={onClick}
-      disabled={!onClick}
+      onPress={onPress}
+      disabled={!onPress}
     >
       <Text style={{ color: isDestructive ? theme.colors.error : "white" }}>
         {label}

@@ -17,14 +17,14 @@ export const Settings = ({ navigation }) => {
       <ListItem
         label="Catagories"
         detail={<IconChevronRight color={theme.colors.border} size={20} />}
-        onClick={() => {
+        onPress={() => {
           navigation.navigate("Categories");
         }}
       />
       <ListItem
         label="Erase all data"
         isDestructive
-        onClick={() => {
+        onPress={() => {
           Alert.alert(
             "Are you sure man?",
             "Don't ignore how much money you wasted on buying useless stuffs",
