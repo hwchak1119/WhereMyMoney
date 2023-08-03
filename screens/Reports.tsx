@@ -7,10 +7,11 @@ import BottomSheet, {
 
 import { IconCalendar } from "../constants/icons";
 import { theme } from "../theme";
-
-import { expensesData } from "../testing/expenseData";
+import WeeklyChart from "../components/Charts/WeeklyChart";
 import { ListItem } from "../components/ListItem";
 import { Recurrence } from "../types/constant";
+
+import { expensesData } from "../testing/expenseData";
 
 export const Reports = ({ navigation }) => {
   const [recurrence, setRecurrence] = useState<Recurrence>(Recurrence.Monthly);
@@ -24,7 +25,7 @@ export const Reports = ({ navigation }) => {
           style={{ marginRight: theme.spacing.md }}
           onPress={() => sheetRef.current?.snapToIndex(0)}
         >
-          <IconCalendar size={20} color={theme.colors.primary} />
+          <IconCalendar size={20} color={theme.colors.text} />
         </TouchableOpacity>
       ),
     });
@@ -39,6 +40,7 @@ export const Reports = ({ navigation }) => {
           height: "100%",
         }}
       >
+        <WeeklyChart expenses={expensesData} />
         <View
           style={{
             display: "flex",
@@ -95,6 +97,9 @@ export const Reports = ({ navigation }) => {
             <View>
               <ListItem
                 label={item}
+                color={
+                  recurrence === item ? theme.colors.primary : theme.colors.text
+                }
                 onPress={() => {
                   setRecurrence(item);
                   sheetRef.current?.close();

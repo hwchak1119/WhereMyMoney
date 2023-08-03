@@ -6,6 +6,7 @@ import { theme } from "../theme";
 
 type Props = {
   label: string;
+  color?: string;
   detail?: React.ReactNode;
   onPress?: () => void;
   swipeToDelete?: boolean;
@@ -15,6 +16,7 @@ type Props = {
 
 export const ListItem = ({
   label,
+  color,
   detail,
   onPress,
   swipeToDelete,
@@ -85,7 +87,9 @@ export const ListItem = ({
       onPress={onPress}
       disabled={!onPress}
     >
-      <Text style={{ color: isDestructive ? theme.colors.error : "white" }}>
+      <Text
+        style={{ color: isDestructive ? theme.colors.error : color || "white" }}
+      >
         {label}
       </Text>
       {detail && <>{detail}</>}

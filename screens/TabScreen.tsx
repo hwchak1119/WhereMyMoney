@@ -30,7 +30,7 @@ export default function TabScreen() {
           tabBarIcon: (props) => <TabBarIcon type="reports" {...props} />,
           headerRight: () => (
             <TouchableOpacity style={{ marginRight: theme.spacing.md }}>
-              <IconCalendar size={20} color={theme.colors.primary} />
+              <IconCalendar size={20} color={theme.colors.text} />
             </TouchableOpacity>
           ),
         })}
