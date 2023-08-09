@@ -40,7 +40,7 @@ export const Reports = ({ navigation }) => {
           height: "100%",
         }}
       >
-        <WeeklyChart expenses={expensesData} />
+        <WeeklyChart expensesData={expensesData} />
         <View
           style={{
             display: "flex",

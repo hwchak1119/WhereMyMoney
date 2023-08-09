@@ -21,7 +21,7 @@ export const expensesData = [
         category: { id: "1", color: "#FFFFFF", name: "string" },
       },
     ],
-    total: 200,
+    total: 500,
   },
   {
     date: "Yesterday",
@@ -65,6 +65,6 @@ export const expensesData = [
         category: { id: "1", color: "#FFFFFF", name: "string" },
       },
     ],
-    total: 200,
+    total: 350,
   },
 ];
