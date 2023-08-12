@@ -18,6 +18,8 @@ import ColorPicker, {
   Swatches,
 } from "reanimated-color-picker";
 
+// import { RealmContext } from "../RealmConfig";
+import { Category } from "../models/category";
 import { theme } from "../theme";
 import { IconAdd, IconTrash } from "../constants/icons";
 import { CategoryProps } from "../types/category";
@@ -25,22 +27,15 @@ import CategoryRow from "../components/CategoryRow";
 import { RectButton } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
+// const { useQuery, useRealm } = RealmContext;
+
 export default function Categories() {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [selectedColor, setSelectedColor] = useState(theme.colors.primary);
   const [newName, setNewName] = useState("");
-  const [categories, setCategories] = useState<CategoryProps[]>([
-    {
-      id: "1",
-      color: theme.colors.primary,
-      name: "AAA",
-    },
-    {
-      id: "2",
-      color: theme.colors.primary,
-      name: "BBB",
-    },
-  ]);
+
+  // const categories = useQuery(Category);
+  // const realm = useRealm();
 
   const onSelectColor = ({ hex }) => {
     setSelectedColor(hex);
@@ -49,23 +44,27 @@ export default function Categories() {
   const createCategory = () => {
     if (!newName) return;
 
-    setCategories([
-      ...categories,
-      { id: Math.random().toString(), color: selectedColor, name: newName },
-    ]);
+    // realm.write(() => {
+    //   realm.create("Category", {
+    //     _id: Math.random().toString(),
+    //     color: selectedColor,
+    //     name: newName,
+    //   });
+    // });
     setNewName("");
     setSelectedColor(theme.colors.primary);
   };
 
-  const deleteCategory = useCallback((id: string) => {
-    setCategories(
-      categories.filter((category) => {
-        category.id !== id;
-      })
-    );
+  const deleteCategory = useCallback((item: any) => {
+    // categories.filter((category) => {
+    //   category.id !== id;
+    // })
+    // realm.write(() => {
+    //   realm.delete(item);
+    // });
   }, []);
 
-  const renderRightActions = (dragX, id) => {
+  const renderRightActions = (dragX, item) => {
     const trans = dragX.interpolate({
       inputRange: [0, 1, 1.5, 2],
       outputRange: [60, 0, -4, -5],
@@ -80,7 +79,7 @@ export default function Categories() {
           paddingHorizontal: theme.spacing.md,
         }}
         onPress={() => {
-          deleteCategory(id);
+          deleteCategory(item);
         }}
       >
         <Animated.View
@@ -121,18 +120,18 @@ export default function Categories() {
               overflow: "hidden",
             }}
           >
-            <FlatList
+            {/* <FlatList
               data={categories}
               renderItem={({ item }) => (
                 <Swipeable
                   containerStyle={{ backgroundColor: theme.colors.error }}
-                  renderRightActions={(e) => renderRightActions(e, item.id)}
+                  renderRightActions={(e) => renderRightActions(e, item)}
                 >
                   <CategoryRow color={item.color} name={item.name} />
                 </Swipeable>
               )}
-              keyExtractor={(item) => item.name}
-            />
+              keyExtractor={(item) => item._id.toString()}
+            /> */}
           </View>
         </ScrollView>
 
