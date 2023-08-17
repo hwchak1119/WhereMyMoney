@@ -9,8 +9,8 @@ import Realm from "realm";
 // Define your object model
 export class Category extends Realm.Object<Category> {
   _id!: Realm.BSON.ObjectId;
-  color!: string;
-  name!: string;
+  color: string;
+  name: string;
 
   static schema = {
     name: "Category",

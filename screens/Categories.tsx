@@ -18,7 +18,7 @@ import ColorPicker, {
   Swatches,
 } from "reanimated-color-picker";
 
-// import { RealmContext } from "../RealmConfig";
+import { RealmContext } from "../RealmConfig";
 import { Category } from "../models/category";
 import { theme } from "../theme";
 import { IconAdd, IconTrash } from "../constants/icons";
@@ -27,15 +27,15 @@ import CategoryRow from "../components/CategoryRow";
 import { RectButton } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
-// const { useQuery, useRealm } = RealmContext;
+const { useQuery, useRealm } = RealmContext;
 
 export default function Categories() {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [selectedColor, setSelectedColor] = useState(theme.colors.primary);
   const [newName, setNewName] = useState("");
 
-  // const categories = useQuery(Category);
-  // const realm = useRealm();
+  const categories = useQuery(Category);
+  const realm = useRealm();
 
   const onSelectColor = ({ hex }) => {
     setSelectedColor(hex);
@@ -44,24 +44,21 @@ export default function Categories() {
   const createCategory = () => {
     if (!newName) return;
 
-    // realm.write(() => {
-    //   realm.create("Category", {
-    //     _id: Math.random().toString(),
-    //     color: selectedColor,
-    //     name: newName,
-    //   });
-    // });
+    realm.write(() => {
+      realm.create("Category", {
+        _id: new Realm.BSON.ObjectId(),
+        color: selectedColor,
+        name: newName,
+      });
+    });
     setNewName("");
     setSelectedColor(theme.colors.primary);
   };
 
   const deleteCategory = useCallback((item: any) => {
-    // categories.filter((category) => {
-    //   category.id !== id;
-    // })
-    // realm.write(() => {
-    //   realm.delete(item);
-    // });
+    realm.write(() => {
+      realm.delete(item);
+    });
   }, []);
 
   const renderRightActions = (dragX, item) => {
@@ -120,7 +117,7 @@ export default function Categories() {
               overflow: "hidden",
             }}
           >
-            {/* <FlatList
+            <FlatList
               data={categories}
               renderItem={({ item }) => (
                 <Swipeable
@@ -130,8 +127,8 @@ export default function Categories() {
                   <CategoryRow color={item.color} name={item.name} />
                 </Swipeable>
               )}
-              keyExtractor={(item) => item._id.toString()}
-            /> */}
+              keyExtractor={(item) => item._id.toHexString()}
+            />
           </View>
         </ScrollView>
 

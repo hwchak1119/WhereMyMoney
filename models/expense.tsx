@@ -35,7 +35,7 @@ export class Expense extends Realm.Object<Expense> {
       amount: "int",
       note: "string",
       recurrence: "string",
-      date: "Date",
+      date: "date",
       category: "Category",
     },
     primaryKey: "_id",
